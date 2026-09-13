@@ -1,0 +1,4 @@
+{
+  "Interrupt vector": { "prefix": "c251-vector", "body": ["ORG ${1:0000H}", "LJMP ${2:START}", "END"], "description": "Basic C251 assembly entry point" },
+  "Function": { "prefix": "c251-func", "body": ["${1:label}:", "    ${2:NOP}", "    RET"], "description": "Basic C251 assembly function" }
+}

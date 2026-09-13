@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/ pujol/master/tmlanguage.json",
+  "name": "C251 Assembly",
+  "scopeName": "source.asm.a251",
+  "patterns": [
+    { "name": "comment.line.semicolon.a251", "match": ";.*$" },
+    { "name": "keyword.control.a251", "match": "\\b(ORG|END|EQU|DB|DW|DS|CODE|DATA|XDATA|CSEG|DSEG|USING|BIT|WORD|BYTE)\\b" },
+    { "name": "keyword.operator.a251", "match": "\\b(MOV|MOVX|MOVC|ADD|ADDC|SUBB|INC|DEC|MUL|DIV|ANL|ORL|XRL|CLR|SETB|CPL|SJMP|LJMP|AJMP|JMP|JZ|JNZ|JC|JNC|DJNZ|CALL|LCALL|ACALL|RET|RETI|PUSH|POP|NOP)\\b" },
+    { "name": "constant.numeric.a251", "match": "\\b(0x[0-9A-Fa-f]+|[0-9]+[bBhHdD]?)\\b" },
+    { "name": "entity.name.function.a251", "match": "^[A-Za-z_][\\w$]*:" }
+  ]
+}

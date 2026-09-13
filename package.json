@@ -1,0 +1,89 @@
+{
+  "name": "c251-keil-assistant",
+  "displayName": "Keil Assistant C251",
+  "description": "VS Code 上的 Keil C251 辅助工具，与 C/C++ 插件配合使用：项目视图、编译/下载、语法高亮与代码片段。",
+  "version": "0.2.0",
+  "publisher": "local",
+  "license": "MIT",
+  "icon": "icon.png",
+  "repository": { "type": "git", "url": "https://github.com/Hzidbdb/KEIL-C251-FOR-VSCODE.git" },
+  "homepage": "https://github.com/Hzidbdb/KEIL-C251-FOR-VSCODE#readme",
+  "bugs": { "url": "https://github.com/Hzidbdb/KEIL-C251-FOR-VSCODE/issues" },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Programming Languages"],
+  "activationEvents": ["workspaceContains:**/*.uvprojx", "workspaceContains:**/*.uvproj", "onCommand:c251.openProject"],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Keil Assistant C251",
+      "properties": {
+        "KeilAssistant.C251.Uv4Path": {
+          "type": "string",
+          "scope": "machine",
+          "default": "",
+          "description": "Absolute path to Keil C251 uVision UV4.exe."
+        },
+        "KeilAssistant.Project.ExcludeList": {
+          "type": "array",
+          "items": { "type": "string" },
+          "scope": "resource",
+          "default": ["template.uvproj", "template.uvprojx"],
+          "description": "Project file names ignored during automatic discovery."
+        }
+      }
+    },
+    "commands": [
+      { "command": "c251.openProject", "title": "Keil C251: Open Project" },
+      { "command": "c251.build", "title": "Keil C251: Build", "icon": "$(tools)" },
+      { "command": "c251.rebuild", "title": "Keil C251: Rebuild", "icon": "$(refresh)" },
+      { "command": "c251.download", "title": "Keil C251: Download to Device", "icon": "$(cloud-download)" },
+      { "command": "c251.selectTarget", "title": "Keil C251: Select Target" },
+      { "command": "c251.refresh", "title": "Keil C251: Refresh Project" }
+    ],
+    "keybindings": [
+      { "command": "c251.build", "key": "f7" },
+      { "command": "c251.rebuild", "key": "ctrl+alt+f7" },
+      { "command": "c251.download", "key": "ctrl+alt+d" }
+    ],
+    "menus": {
+      "explorer/context": [
+        { "command": "c251.openProject", "when": "resourceExtname == .uvprojx || resourceExtname == .uvproj" }
+      ],
+      "view/title": [
+        { "command": "c251.openProject", "when": "view == c251Project", "group": "navigation" },
+        { "command": "c251.refresh", "when": "view == c251Project", "group": "navigation" }
+      ],
+      "view/item/context": [
+        { "command": "c251.build", "when": "view == c251Project && viewItem == c251Target", "group": "inline@1" },
+        { "command": "c251.download", "when": "view == c251Project && viewItem == c251Target", "group": "inline@2" },
+        { "command": "c251.rebuild", "when": "view == c251Project && viewItem == c251Target", "group": "inline@3" }
+      ]
+    },
+    "views": {
+      "explorer": [{ "id": "c251Project", "name": "KEIL C251 PROJECT" }]
+    },
+    "problemMatchers": [
+      {
+        "name": "c251",
+        "owner": "c251",
+        "fileLocation": "autoDetect",
+        "pattern": [
+          { "regexp": "^(.+?)\\((\\d+)(?:,\\d+)?\\):\\s*(error|warning)\\s*([A-Z0-9-]+):?\\s*(.*)$", "file": 1, "line": 2, "severity": 3, "code": 4, "message": 5 },
+          { "regexp": "^(?:\\*\\*\\*\\s*)?(ERROR|WARNING)\\s+([A-Z0-9-]+).*?line\\s+(\\d+).*?\\s+(.+)$", "severity": 1, "code": 2, "line": 3, "message": 4 }
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "id": "a251",
+        "aliases": ["A251", "C251 Assembly"],
+        "extensions": [".a251", ".A251", ".a51", ".A51"],
+        "configuration": "./syntaxes/a251.language-configuration.json"
+      }
+    ],
+    "grammars": [{ "language": "a251", "scopeName": "source.asm.a251", "path": "./syntaxes/a251.tmLanguage.json" }],
+    "snippets": [{ "language": "a251", "path": "./syntaxes/a251.snippets.json" }]
+  },
+  "scripts": { "package": "npx @vscode/vsce package" },
+  "devDependencies": { "@vscode/vsce": "^2.24.0" }
+}
